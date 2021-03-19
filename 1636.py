@@ -9,7 +9,6 @@ def frequencySort(nums: List[int]) -> List[int]:
             dic[x].append(i)
         except:
             dic[x] = [i]
-    print(dic)
     ret = []
     for i in sorted(dic):
         for j in sorted(dic[i], reverse=True):
