@@ -66,6 +66,4 @@ if __name__ == "__main__":
         temp.next = a
         temp = temp.next
 
-    printList(head)
-    print("")
     printList(removeElements(head, val))
