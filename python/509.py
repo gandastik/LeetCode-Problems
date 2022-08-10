@@ -5,7 +5,7 @@ def fib(n: int) -> int:
     while(len(lst) != n+1):
         if(len(lst) == 1): lst.append(1)
         else: lst.append(lst[len(lst)-2] + lst[len(lst)-1])
-    return lst[n] 
+    return lst[n]
 
 n = int(input())
 print(fib(n))
