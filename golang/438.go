@@ -10,52 +10,51 @@ func main() {
 }
 
 // DESC: given string s return an array of all the start indices of p's anagram
-// TODO: need to consider this case s = "abacbabc" p = "abc"
 func findAnagrams(s string, p string) []int {
   res := []int{}
-  m := make(map[string]int)
-  for i:=0;i<len(p);i++ {
-    m[string(p[i])] += 1
+  if(len(p) > len(s)) {
+    return res
   }
-  //fmt.Println(m)
-  copy_m := make(map[string]int)
-  for key, value := range m {
-    copy_m[key] = value
+
+  m := map[string]int{}
+  for _, value := range p {
+      m[string(value)] += 1
   }
-  for i:=0;i<len(s); {
-    if _, prs := m[string(s[i])]; !prs {
-      i++
-    for key, value := range m {
-      copy_m[key] = value
+
+  counter := len(m)
+  begin, end := 0, 0
+  //length := 1 << 30
+  for (end < len(s)) {
+    c := string(s[end])
+    if _, prs := m[c]; prs {
+      m[c] -= 1
+      if(m[c] == 0) {
+        counter--
+      }
     }
-      continue
-    } else {
-      //fmt.Println(string(s[i]))
-      copy_m[string(s[i])] -= 1
-      if(copy_m[string(s[i])] < 0) {
-        for key, value := range m {
-          copy_m[key] = value
+    end++
+    for counter == 0 {
+      tempc := string(s[begin])
+      if _, prs := m[tempc]; prs {
+        m[tempc] += 1
+        if(m[tempc] > 0) {
+          counter++
         }
-        continue
       }
-    }
-    if findSumOfValue(copy_m) == 0 {
-      res = append(res, i-len(p)+1)
-      for key, value := range m {
-        copy_m[key] = value
+      if end-begin == len(p) {
+        res = append(res, begin)
       }
-      continue
+      begin++
     }
-    i++
   }
-  fmt.Println(m, copy_m)
+
   return res
 }
 
-func findSumOfValue(m map[string]int) int {
-  sum := 0
-  for _, value := range m {
-    sum += value
-  }
-  return sum
-}
+//func findSumOfValue(m map[string]int) int {
+//  sum := 0
+//  for _, value := range m {
+//    sum += value
+//  }
+//  return sum
+//}
